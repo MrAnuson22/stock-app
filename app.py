@@ -15,7 +15,7 @@ FILE = "stock.csv"
 # -------------------------
 def load_data():
     if not os.path.exists(FILE):
-        df = pd.DataFrame(columns=["no", "name", "qty"])
+        df = pd.DataFrame(columns=["no", "name", "คงเหลือ"])
         df.to_csv(FILE, index=False)
     return pd.read_csv(FILE, dtype=str)
 
@@ -57,13 +57,13 @@ with st.container(border=True):
             else:
                 # ถ้ามีรหัสซ้ำ → แก้ไข
                 if no in df["no"].values:
-                    df.loc[df["no"] == no, ["name", "qty"]] = [name, qty]
+                    df.loc[df["no"] == no, ["name", "คงเหลือ"]] = [name, คงเหลือ]
                     save_data(df)
                     st.success("แก้ไขข้อมูลเรียบร้อยแล้ว")
                 else:
                     new_row = pd.DataFrame(
                         [[no, name, qty]],
-                        columns=["no", "name", "qty"]
+                        columns=["no", "name", "คงเหลือ"]
                     )
                     df = pd.concat([df, new_row], ignore_index=True)
                     save_data(df)
